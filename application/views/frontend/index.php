@@ -1,10 +1,24 @@
 <?php 
+if($this->crud_model->Check_Inactive_LoginEx() && $page_name !== "login")
+{
+	redirect(base_url("login"), "refresh");
+}
+
 switch ($page_title) {
-	case 'Index':
-	$titulo = "Início";
-	break;
-	default: 
-	$titulo = $page_title;
+	case 'Index': $titulo = "Início"; break;
+	case 'Preview_link': $titulo = "Visualizar link"; break;
+	case 'New_link': $titulo = "Novo link"; break;
+	case 'New_lista': $titulo = "Nova lista"; break;
+	case 'Edit_link': $titulo = "Editar link"; break;
+	case 'Edit_lista': $titulo = "Editar lista"; break;
+	case 'Links': $titulo = "Lista de links"; break;
+	case 'Listas': $titulo = "Listas"; break;
+	case 'Gerar_link_user': $titulo = "Gerar links para os usuários"; break;
+	case 'New_cat': $titulo = "Nova categoria"; break;
+	case 'Edit_cat': $titulo = "Editar categoria"; break;
+	case 'Edit_user': $titulo = "Editar usuario"; break;
+	case 'New_user': $titulo = "Criar usuario"; break;
+	default: $titulo = $page_title; break;
 }
 ?>
 <!DOCTYPE html>
@@ -31,7 +45,43 @@ switch ($page_title) {
 	<!-- Custom CSS -->
 	<link href="<?=base_url('assets/css/shark.css')?>" rel="stylesheet">
 	<link href="<?=base_url('assets/css/style.min.css')?>" rel="stylesheet">
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+	<link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js" integrity="sha512-efUTj3HdSPwWJ9gjfGR71X9cvsrthIA78/Fvd/IN+fttQVy7XWkOAXb295j8B3cmm/kFKVxjiNYzKw9IQJHIuQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css">
 </head>
+<?php if($this->crud_model->Check_Inactive_LoginEx()){ ?>
+	<style type="text/css">
+		body, html {
+			height: 100%;
+			margin: 0;
+		}
+
+		.bgimg-1, .bgimg-2, .bgimg-3 {
+			position: relative;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+		}
+		.bgimg-1 {
+			background-image: url("<?=base_url("assets/background.png")?>");
+			height: 100%;
+		}
+
+		.caption {
+			position: absolute;
+			left: 0;
+			bottom: 40%;
+			width: 100%;
+			text-align: center;
+		}
+	</style>
+<?php } ?>
 <body>
 	<div class="preloader">
 		<div class="lds-ripple">

@@ -1,0 +1,11 @@
+.sidebar-link i {
+	background: #ffffff0d!important;
+	padding: 5px;
+	border-radius: 6px;
+	margin-right: 10px;
+	color: #848484!important;
+	border: 1px solid #ffffff0d;
+}
+.sidebar-nav ul .sidebar-item .sidebar-link {
+	color: #848484!important;
+}

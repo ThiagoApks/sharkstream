@@ -1,7 +1,7 @@
 <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
+            <footer class="footer text-center"> 2021 © SharkStream - Feito por <a
+                    href="https://github.com/thiagoapks" target="_blank">Thiago_Apks</a>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

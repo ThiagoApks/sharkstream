@@ -54,6 +54,4 @@ $route['auth/signup'] = 'Main/register';
 $route['auth/signin'] = 'Main/login';
 $route['auth/logout'] = 'Main/signout';
 $route['(:any)'] = 'Main/view/$1';
-$route['panel'] = 'Main/panelview';
-$route['panel/(:any)'] = 'Main/panelview/$1';
 $route['translate_uri_dashes'] = FALSE;

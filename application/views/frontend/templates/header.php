@@ -1,71 +1,71 @@
-<header class="topbar" data-navbarbg="skin5">
-    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-        <div class="navbar-header" data-logobg="skin6">
+<header style="background: #1d1d1d!important" class="topbar bg-dark">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <div class="navbar-header bg-dark">
             <a class="navbar-brand" href="dashboard.html">
                 <span class="mx-auto logo-text">
-                    <img width="100px" class="mx-auto" src="<?=base_url('assets/logo.png')?>" alt="homepage" />
+                    <img width="100px" class="mx-auto" src="<?=base_url('assets/logo_light.png')?>" alt="homepage" />
                 </span>
             </a>
-            <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
-            href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+            <a class="nav-toggler text-light d-block d-md-none"
+            href="javascript:void(0)"><i class="fa-2x ti-menu ti-close"></i></a>
         </div>
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-            <ul class="navbar-nav ms-auto d-flex align-items-center">
-                <li>
-                    <a class="profile-pic" href="#">
-                        <img src="https://images-ext-2.discordapp.net/external/JAN16hfxvulTQIvji4hEDNcWYkMAatHQX2Uj9Fu2v2A/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/700767305956851763/32b66c4e02491c563ce275a2d6bc1b0f.png" alt="user-img" width="36"
-                        class="img-circle"></a>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <?php if($page_name !== "login"): ?>
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    <li class="px-3">
+                        <a class="noshadow btn btn-info" href="<?=base_url("main/signout")?>">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
                     </li>
                 </ul>
-            </div>
-        </nav>
-    </header>
-    <aside class="left-sidebar" data-sidebarbg="skin6">
-        <div class="scroll-sidebar">
+            <?php endif; ?>
+        </div>
+    </nav>
+</header>
+<aside class="left-sidebar bg-dark">
+    <div class="scroll-sidebar">
+        <?php if($page_name !== "login"): ?>
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("")?>" aria-expanded="false">
                             <i class="far fa-home" aria-hidden="true"></i>
                             <span class="hide-menu">Início</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("links")?>" aria-expanded="false">
                             <i class="far fa-film" aria-hidden="true"></i>
-                            <span class="hide-menu">Filmes</span>
+                            <span class="hide-menu">Links</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
-                            <i class="far fa-tv" aria-hidden="true"></i>
-                            <span class="hide-menu">Canais</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("categorias")?>" aria-expanded="false">
                             <i class="far fa-list" aria-hidden="true"></i>
                             <span class="hide-menu">Categorias</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("usuarios")?>" aria-expanded="false">
                             <i class="far fa-users" aria-hidden="true"></i>
                             <span class="hide-menu">Usuários</span>
                         </a>
                     </li>
-                    <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
-                            <i class="far fa-list" aria-hidden="true"></i>
-                            <span class="hide-menu">Listas</span>
-                        </a>
-                    </li>
+                    <?php if($this->crud_model->getRole() == 2): ?>
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("listas")?>" aria-expanded="false">
+                                <i class="far fa-list" aria-hidden="true"></i>
+                                <span class="hide-menu">Listas</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </nav>
             <hr>
             <center>
-                <span class="text-center mx-auto text-muted">Versão 1.0</span>
+                <span class="text-center mx-auto text-muted">v1.0</span>
             </center>
-        </div>
-    </aside>
-    <div class="page-wrapper">
+        <?php endif; ?>
+    </div>
+</aside>
+<div class="page-wrapper">
