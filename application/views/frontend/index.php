@@ -1,7 +1,8 @@
 <?php 
-if($this->crud_model->Check_Inactive_LoginEx() && $page_name !== "login")
+if($this->crud_model->Check_Inactive_LoginEx() == true)
 {
-	redirect(base_url("login"), "refresh");
+	if($page_name !== "login")
+		redirect(base_url("login"), "refresh");
 }
 
 switch ($page_title) {
@@ -20,6 +21,9 @@ switch ($page_title) {
 	case 'New_user': $titulo = "Criar usuario"; break;
 	default: $titulo = $page_title; break;
 }
+
+if($this->crud_model->Check_Active_LoginEx() && $this->crud_model->getRole() < 1)
+	redirect(base_url("erro"), "refresh");
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -47,12 +51,13 @@ switch ($page_title) {
 	<link href="<?=base_url('assets/css/style.min.css')?>" rel="stylesheet">
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 	<link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
-    <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <script type="text/javascript" src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js" integrity="sha512-efUTj3HdSPwWJ9gjfGR71X9cvsrthIA78/Fvd/IN+fttQVy7XWkOAXb295j8B3cmm/kFKVxjiNYzKw9IQJHIuQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css">
+	<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js" integrity="sha512-efUTj3HdSPwWJ9gjfGR71X9cvsrthIA78/Fvd/IN+fttQVy7XWkOAXb295j8B3cmm/kFKVxjiNYzKw9IQJHIuQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css">
 </head>
 <?php if($this->crud_model->Check_Inactive_LoginEx()){ ?>
 	<style type="text/css">

@@ -39,12 +39,28 @@
                             <span class="hide-menu">Links</span>
                         </a>
                     </li>
+                    <?php if($this->crud_model->getRole() == 2): ?>
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("new_link")?>" aria-expanded="false">
+                                <i class="far fa-plus" aria-hidden="true"></i>
+                                <span class="hide-menu">Criar link</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("categorias")?>" aria-expanded="false">
                             <i class="far fa-list" aria-hidden="true"></i>
                             <span class="hide-menu">Categorias</span>
                         </a>
                     </li>
+                    <?php if($this->crud_model->getRole() == 2): ?>
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("new_cat")?>" aria-expanded="false">
+                                <i class="far fa-plus" aria-hidden="true"></i>
+                                <span class="hide-menu">Criar categoria</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("usuarios")?>" aria-expanded="false">
                             <i class="far fa-users" aria-hidden="true"></i>
@@ -56,6 +72,12 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("listas")?>" aria-expanded="false">
                                 <i class="far fa-list" aria-hidden="true"></i>
                                 <span class="hide-menu">Listas</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?=base_url("config")?>" aria-expanded="false">
+                                <i class="far fa-cogs" aria-hidden="true"></i>
+                                <span class="hide-menu">Configuração</span>
                             </a>
                         </li>
                     <?php endif; ?>

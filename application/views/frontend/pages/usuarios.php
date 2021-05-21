@@ -26,11 +26,11 @@
             <?php 
             if($this->crud_model->getRole() == 1) {
               $query = $this->crud_model->getUsuarios($this->crud_model->getUserInfo()->id);
+              array_push($query, json_decode(json_encode($this->crud_model->getUserInfo()), true));
             } else {
               $query = $this->crud_model->getUsuarios();
             }
             foreach ($query as $row):
-              if($row['id'] == $this->crud_model->getUserInfo()->id) continue;
               ?>
               <tr>
                 <td><?=$row['id']?></td>

@@ -47,26 +47,27 @@ class Crud_model extends CI_Model {
 	}
 	function Check_Active_Login()
 	{
-		if($this->session->userdata('user_login_status') == 1)
+		if($this->session->userdata('user_login_status'))
 			redirect(base_url(), 'refresh');
 	}
 	function Check_Inactive_Login()
 	{
-		if($this->session->userdata('user_login_status') != 1)
+		if(!$this->session->userdata('user_login_status'))
 			redirect(base_url(), 'refresh');
 	}
 
 	function Check_Active_LoginEx()
 	{
-		if($this->session->userdata('user_login_status') == 1)
+		if($this->session->userdata('user_login_status'))
 			return true;
 		else return false;
 	}
 	function Check_Inactive_LoginEx()
 	{
-		if($this->session->userdata('user_login_status') != 1)
-			return true;
-		else return false;
+		if(!$this->session->userdata('user_login_status'))
+			return 1;
+		else
+			return 0;
 	}
 	function checkAdminRole()
 	{
@@ -304,16 +305,27 @@ class Crud_model extends CI_Model {
 		if($this->db->insert('usuarios' , $data))
 			return true;
 	}
-	function updateUsuario($id, $emailuser, $nameuser, $cargo)
+	function updateUsuario($id, $emailuser, $nameuser, $cargo, $senha = " ")
 	{
 		$data['name'] = $nameuser;
 		$data['email'] = $emailuser;
 		$data['role'] = $cargo;
+		if($senha !== " ")
+			$data['password'] = strtoupper(hash('sha256', $senha.'4BCD3FG@BYM4RIn3tH14g0C0w'));
 		$this->db->where('id', $id);
 		if($this->db->update('usuarios' , $data))
 			return true;
 	}
 
+	function isLocal(){
+		if ((isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))) {
+			if (strtolower(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST)) != strtolower($_SERVER['HTTP_HOST'])) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
 
 	// cors
 	function cors() {

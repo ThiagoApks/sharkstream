@@ -23,42 +23,44 @@ class Main extends CI_Controller {
 			exit("Acesso negado");
 		}
 		else {
+			header('Content-type: text/plain');
 			$expiracao = date_range(now(), $buscar->row()->acesso_expira);
-			echo "################################### SharkStream v1.0 ###################################";
-			echo "#";
+			echo "################################### SharkStream v1.0 ###################################\n";
+			echo "#\n";
 			echo '#PLAYLISTV: pltv-logo="'.base_url("assets/logo_light.png").'" pltv-name="SharkStream" pltv-description="Canais de TV e filmes gratuitos" pltv-site="'.base_url().'""';
-			echo "#";
-			echo "#";
-			echo "# Esta lista é particular e tem uma data de expiração. Não compartilhe-a com desconhecidos!";
-			echo "# Data de expiração: ".$buscar->row()->acesso_expira."";
+			echo "\n#\n";
+			echo "#\n";
+			echo "# Esta lista é particular e tem uma data de expiração. Não compartilhe-a com desconhecidos!\n";
+			echo "# Data de expiração: ".$buscar->row()->acesso_expira."\n";
 			if($expiracao != false)
-				echo "# Expirará em: ".count($expiracao)." dias";
+				echo "# Expirará em: ".count($expiracao)." dias\n";
 			else {
-				echo "# Este acesso está expirado.";
+				echo "# Este acesso está expirado.\n";
 				exit();
 			}
 			if(!$this->crud_model->getUserInfo($buscar->row()->id_usuario))
 				exit();
 			$userinfo = $this->crud_model->getUserInfo($buscar->row()->id_usuario);
-			echo "# Lista gerada para: ".$userinfo->email."";
-			echo "# Cliente: ".$userinfo->name."";
-			echo "# Revendedor: ".$this->crud_model->getUserInfo($buscar->row()->gerado_por)->name."";
+			echo "# Lista gerada para: ".$userinfo->email."\n";
+			echo "# Cliente: ".$userinfo->name."\n";
+			echo "# Revendedor: ".$this->crud_model->getUserInfo($buscar->row()->gerado_por)->name."\n";
 			if($expiracao == false) {
 				for ($i=0; $i < 10; $i++)
 				{
-					echo '#EXTINF:0 tvg-logo="'.base_url('assets/logo_light.png').'" tvg-name="Expirado" group-title="Seu acesso expirou", Seu acesso expirou';
+					$logo = base_url('assets/logo_light.png');
+					echo '#EXTINF:0 tvg-logo="$logo" tvg-name="Expirado" group-title="Seu acesso expirou", Seu acesso expirou';
 					echo "";
 				}
 				exit();
 			}
 			$lista = $this->crud_model->getLinksLista($buscar->row()->id_lista);
+			echo "#EXTM3U\n";
 			foreach($lista as $sublist)
 			{
 				$links = $this->crud_model->getLinksCategoria($sublist['id_categoria']);
 				foreach ($links as $row) {
-					echo "#EXTM3U
-#EXTINF:0 tvg-logo=".$row['logo']." group-title='".$this->crud_model->getCatInfo($row['categoria'])->nomecategoria."',  ".$row['nome']."
-			".$row['link'];
+					echo "\n
+#EXTINF:0 tvg-logo=".$row['logo']." group-title='".$this->crud_model->getCatInfo($row['categoria'])->nomecategoria."',  ".$row['nome']."\n".$row['link'];
 				}
 			}
 		}
@@ -75,6 +77,8 @@ class Main extends CI_Controller {
 	{
 		$this->crud_model->Check_Active_Login();
 		$this->crud_model->is_ajax();
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		header('Access-Control-Allow-Origin: *');
 
 		header('Access-Control-Allow-Methods: GET, POST');
@@ -98,17 +102,17 @@ class Main extends CI_Controller {
 	}
 	function signout()
 	{
-		$this->crud_model->Check_Inactive_Login();
-
 		$this->session->set_userdata('user_login_status', '');
 		$this->session->set_userdata('user_id', '');
 		$this->session->sess_destroy();
-		redirect(base_url(), 'refresh');
+		redirect(base_url("login"), 'refresh');
 	}
 
 	// funcoes links 
 	function add_link()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -120,6 +124,8 @@ class Main extends CI_Controller {
 	}
 	function update_link()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -131,6 +137,8 @@ class Main extends CI_Controller {
 	}
 	function delete_link()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -142,6 +150,8 @@ class Main extends CI_Controller {
 	// funcoes categorias
 	function add_cate()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -153,6 +163,8 @@ class Main extends CI_Controller {
 	}
 	function update_cate()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -164,6 +176,8 @@ class Main extends CI_Controller {
 	}
 	function delete_cate()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -177,6 +191,8 @@ class Main extends CI_Controller {
 	// funcoes categorias
 	function add_lista()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -188,6 +204,8 @@ class Main extends CI_Controller {
 	}
 	function update_lista()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -199,6 +217,8 @@ class Main extends CI_Controller {
 	}
 	function delete_lista()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getRole() < 2)
 			redirect(base_url(), "refresh");
@@ -209,6 +229,8 @@ class Main extends CI_Controller {
 	}
 	function add_categoria_lista()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		if(!isset($_POST['idcategoria']) || !isset($_POST['idlista']))
 			exit("Dados incompletos");
 		$idcate = $_POST['idcategoria'];
@@ -220,6 +242,8 @@ class Main extends CI_Controller {
 	}
 	function remove_categoria_lista()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		if(!isset($_POST['idcategoria']) || !isset($_POST['idlista']))
 			exit("Dados incompletos");
 		$idcate = $_POST['idcategoria'];
@@ -232,6 +256,8 @@ class Main extends CI_Controller {
 	// funcoes usuarios
 	function add_usuario()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if(!isset($_POST['nameuser']))
 			exit("Dados incompletos");
@@ -246,17 +272,35 @@ class Main extends CI_Controller {
 	}
 	function update_usuario()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if($this->crud_model->getUserInfo($_POST['iduser'])->role > $this->crud_model->getUserInfo()->role)
 			redirect(base_url(), "refresh");
 		if(!isset($_POST['nomeuser']))
 			exit("Dados incompletos");
-		if($this->crud_model->updateUsuario($_POST['iduser'], $_POST['emailuser'], $_POST['nomeuser'], $_POST['cargo'])) {
-			redirect(base_url("edit_user?id=".$_POST['iduser']), "refresh");
-		}
+		$query = $this->db->get_where("usuarios", array('email' => $_POST['emailuser']));
+		
+		$total_number_of_matching_user = $query->num_rows();
+		// validate if duplicate email exists]
+		if ($this->crud_model->getUserInfo()->email == $_POST['emailuser']) {
+			if($this->crud_model->updateUsuario($_POST['iduser'], $_POST['emailuser'], $_POST['nomeuser'], $_POST['cargo'], (isset($_POST["senhauser"]))?$_POST["senhauser"]:" ")) {
+				redirect(base_url("edit_user?id=".$_POST['iduser']), "refresh");
+			}
+		} else {
+			if ($total_number_of_matching_user < 1) {
+				if($this->crud_model->updateUsuario($_POST['iduser'], $_POST['emailuser'], $_POST['nomeuser'], $_POST['cargo'], (isset($_POST["senhauser"]))?$_POST["senhauser"]:" ")) {
+					redirect(base_url("edit_user?id=".$_POST['iduser']), "refresh");
+				}
+			} else {
+				redirect(base_url("edit_user?id=".$_POST['iduser']."&erro="), "refresh");
+			}
+		}	
 	}
 	function delete_usuario()
 	{
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if(!isset($_GET['iduser']))
 			exit("Dados incompletos");
@@ -269,6 +313,8 @@ class Main extends CI_Controller {
 		redirect(base_url("usuarios"), "refresh");
 	}
 	function suspender_user() {
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if(!isset($_GET['id']))
 			exit("Dados incompletos");
@@ -280,6 +326,8 @@ class Main extends CI_Controller {
 			redirect(base_url("usuarios"));
 	}
 	function gerarlinkuser() {
+		if(!$this->crud_model->isLocal())
+			redirect(base_url(), "refresh");
 		$this->crud_model->Check_Inactive_Login();
 		if(!isset($_POST['expiracao']) || !isset($_POST['listaid']) || !isset($_POST['iduser']))
 			exit("Dados incompletos");

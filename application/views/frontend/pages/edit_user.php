@@ -6,10 +6,9 @@ if(!isset($_GET['id']))
 $iduser = $_GET['id'];
 $userinfo = $this->crud_model->getUserInfo($iduser);
 if($iduser == $this->crud_model->getUserInfo()->id)
+	$mesmousuario = true;
+if($this->crud_model->checkCliente($_GET['id']) < 1 && $this->crud_model->getRole() < 2 && $mesmousuario == false)
 	redirect(base_url(), "refresh");
-if($this->crud_model->checkCliente($_GET['id']) < 1 && $this->crud_model->getRole() < 2)
-	redirect(base_url(), "refresh");
-
 ?>
 <div class="container-fluid">
 	<div class="row justify-content-center">
@@ -25,7 +24,11 @@ if($this->crud_model->checkCliente($_GET['id']) < 1 && $this->crud_model->getRol
 					<label for="nomeuser">Email</label>
 					<input required type="text" value="<?=$userinfo->email?>" name="emailuser" class="form-control" id="nomeuser" placeholder="Digite o email do cliente">
 				</div>
-				<?php if($this->crud_model->getRole() == 2) { ?>
+				<div class="form-group">
+					<label for="senhauser">Nova senha</label>
+					<input minlength="3" type="text" name="senhauser" class="form-control" id="senhauser" placeholder="Digite a nova do cliente">
+				</div>
+				<?php if($this->crud_model->getRole() == 2 && $mesmousuario == false) { ?>
 					<div class="form-group">
 						<label for="cargo">Cargo</label>
 						<select value="<?=$userinfo->role?>" required name="cargo" class="form-control" id="cargo">
@@ -37,12 +40,15 @@ if($this->crud_model->checkCliente($_GET['id']) < 1 && $this->crud_model->getRol
 				<?php } else { ?>
 					<div class="form-group">
 						<label for="cargo">Cargo</label>
-						<select value="<?=$userinfo->role?>" disabled required name="cargo" class="form-control" id="cargo">
-							<option value="0">Cliente</option>
+						<select value="<?=$userinfo->role?>" required name="cargo" class="form-control" id="cargo">
+							<option value="<?=$userinfo->role?>"><?=$this->crud_model->getRoleName($userinfo->role)?></option>
 						</select>
 					</div>
 				<?php } ?>
 				<hr>
+				<?php if(isset($_GET['erro'])){ ?>
+					<div class="alert alert-danger">Use outro e-mail</div>
+				<?php } ?>
 				<div class="text-center">
 					<a href="<?=base_url("main/delete_usuario?iduser=".$userinfo->id)?>" class="btn btn-danger px-5 py-2 text-uppercase">DELETAR</a>
 					<button type="submit" class="btn btn-info px-5 py-2 text-uppercase">SALVAR</button>

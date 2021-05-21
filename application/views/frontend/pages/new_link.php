@@ -34,6 +34,7 @@ if($this->crud_model->getRole() < 2)
 					<video id="preview" class="w-100 mx-auto embed-responsive-item video-js vjs-default-skin" autoplay controls preload="auto">
 						<source src="#" type='application/x-mpegURL'>
 						</video>
+						<small>O player não suporta vídeos <b>.mkv</b></small>
 					</div>
 					<script>
 						var player = videojs('preview');
