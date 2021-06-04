@@ -1,3 +1,6 @@
+```
+Qualquer bug ou adição de algo, adicione/corrija e envie um commit :)
+```
 # SharkStream
 ### Painel para listas IPTV
 
